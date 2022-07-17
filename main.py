@@ -1,4 +1,9 @@
 from tkinter import *
+
+from math import *                    #Libreria de funciones matematicas
+import sympy as sp                    #Libreria para matematica simbolica
+from sympy.plotting import plot       # Libreria para graficas
+
 #----------------------------------------------------------------------------------------------------------------------
 def form_Newton_inicio():
     inicio.iconify()
@@ -95,7 +100,27 @@ def form_Taylor():
     labe3 = Label(form_Taylor, text="# Iteraciones")
     caja3 = Entry(form_Taylor)
     #--------------------------------
-    boton1 = Button(form_Taylor, text="Calcular")
+    x = sp.Symbol('x')
+    def Taylor(fx, a, n):
+        i = 0                   #Ciclo inicia en 0
+        formula_tay = 0         
+        F_graf = fx             #Grafica de la funcion
+        while i<=n:
+            formula_tay += (fx.diff(x,i).subs(x,a))/(factorial(i))*(x-a)**i     #Formula de Taylor
+            i+=1                                                                #Contador
+        g = plot(formula_tay,F_graf,(x,-5,5), title='Serie de Taylor', show=False)    #Graficar la funcion y el polinomio de maclaurin
+        g[0].line_color='g'            #Grafica funcion
+        g[1].line_color='r'            #Grafica Taylor
+        g.show()                       #Mostrar Grafica
+        print(formula_tay)
+
+    def Calcular():
+        #funcion = sp.exp(-x)
+        funcion = sp.exp(caja1.get())
+        Taylor(funcion, 1, 10)
+
+    #--------------------------------
+    boton1 = Button(form_Taylor, text="Calcular", command=Calcular)
     boton2 = Button(form_Taylor, text="Regresar", command=form_Taylor_inicio)
     labe1.grid(row=0, column=0)
     caja1.grid(row=0, column=1)
