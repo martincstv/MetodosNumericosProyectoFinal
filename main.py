@@ -112,12 +112,13 @@ def form_Taylor():
         g[0].line_color='g'            #Grafica funcion
         g[1].line_color='r'            #Grafica Taylor
         g.show()                       #Mostrar Grafica
-        print(formula_tay)
+        print("\n","Solución: ",formula_tay,"\n")
 
     def Calcular():
-        #funcion = sp.exp(-x)
         funcion = sp.exp(caja1.get())
-        Taylor(funcion, 1, 10)
+        a = int(caja2.get())
+        n = int(caja3.get())
+        Taylor(funcion, a, n)
 
     #--------------------------------
     boton1 = Button(form_Taylor, text="Calcular", command=Calcular)
