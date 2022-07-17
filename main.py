@@ -159,7 +159,29 @@ def form_Maclaurin():
     caja1 = Entry(form_Maclaurin)
     labe2 = Label(form_Maclaurin, text="# Iteraciones")
     caja2 = Entry(form_Maclaurin)
-    boton1 = Button(form_Maclaurin, text="Calcular")
+    #----------------------------------------------------------------------------------
+    x = sp.symbols('x')                #Definir x como simbolo
+    def Maclaurin(f_x, n):
+        f = f_x                                                                 #variable f igualada con f_x de la funcion
+        F_graf = f                                                              #funcion para la grafica
+        formula_mac = f.subs(x, 0)                                              #Sustituir a=0 por las x
+        for k in range(1, n+1):
+            deriv = sp.diff(f, x)                                               #Derivar fx
+            formula_mac += deriv.subs(x, 0)*((x)**k)/factorial(k)  #Formula Maclaurin
+            f = deriv                                                           # se derivara por cada iteracion   
+        print("\n","Solución: ",sp.expand(formula_mac),"\n")                                           #Solucion expandida por Serie de Maclaurin
+        g = plot(F_graf, formula_mac,(x,-5,5), title='Serie de Maclaurin', show=False)
+        g[0].line_color='g'            #Grafica funcion
+        g[1].line_color='r'            #Grafica Serie Maclaurin
+        g.show()                       #Mostrar Grafica
+
+    def Calcular():
+        funcion = sp.exp(caja1.get())                  #Funcion
+        n = int(caja2.get())
+        Maclaurin(funcion, n)                #LLamar al metodo
+
+    #---------------------------------------------------------------------------------
+    boton1 = Button(form_Maclaurin, text="Calcular", command=Calcular)
     boton2 = Button(form_Maclaurin, text="Regresar", command=form_Maclaurin_inicio)
     #--------------------------------
     labe1.grid(row=0, column=0)
